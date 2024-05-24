@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        .navbar-custom {
+            background: linear-gradient(to bottom right, #007bff, #00bfff) !important;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .navbar-custom {
+                background: white !important;
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<th:block th:fragment="navbar">
+    <th:block th:fragment="navbar(loggedIn)">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/acceuil}">Projet XML</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" th:if="${loggedIn}">
+                        <a class="nav-link" th:href="@{/help}">Aide</a>
+                    </li>
+                    <li class="nav-item dropdown" th:if="${loggedIn}">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">CVs</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" th:href="@{/cv24/resume}">Liste des CV</a>
+                            <a class="dropdown-item" th:href="@{/cv24/resume/xml}">Liste des CV en XML</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" th:if="${loggedIn}">
+                        <form class="d-flex" method="get" action="/cv24/search">
+                            <input class="form-control me-sm-2" type="search" name="objectif" placeholder="Chercher par objectif">
+                            <input class="form-control me-sm-2" type="date" name="date" placeholder="Search by date">
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Chercher</button>
+                        </form>
+                    </li>
+
+                    <li class="nav-item" th:if="${loggedIn}">
+                        <form th:action="@{/auth/logout}" method="post" class="form-inline">
+                            <button class="btn btn-link nav-link" type="submit">Déconnexion</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </th:block>
+</th:block>
+
+<script th:src="@{https://code.jquery.com/jquery-3.5.1.slim.min.js}"></script>
+<script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js}"></script>
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+<script>
+    window.onload = function() {
+        document.querySelector('.navbar-custom').style.background = 'linear-gradient(to bottom right, #007bff, #00bfff)';
+    }
+</script>
+</body>
+</html>

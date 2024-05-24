@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des CVs</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" th:href="@{/images/xml.ico}" type="image/x-icon">
+
+    <style>
+        .cv-content {
+            background-color: #121212;
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .cv-content .table {
+            background-color: #1e1e1e;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+        }
+        .cv-content .table th, .cv-content .table td {
+            border-top: none;
+            border-color: #333;
+        }
+
+        .cv-content .btn {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        .cv-content .btn:hover {
+            background-color: #00c853;
+            color: #ffffff;
+        }
+        .cv-content .container {
+            padding: 20px;
+        }
+        .cv-content .table th {
+            text-align: center;
+        }
+        .cv-content .table td {
+            vertical-align: middle;
+        }
+
+        .cv-content .custom-file-input {
+            display: none;
+        }
+        .cv-content .custom-file-label {
+            background-color: #343a40;
+            color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            padding: .375rem .75rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cv-content .custom-file-label:hover {
+            background-color: #495057;
+        }
+
+        .cv-content .form-inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cv-content .form-inline .btn-file {
+            margin-left: 10px;
+        }
+
+        .cv-content .mb-3-custom {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navBar :: navbar(loggedIn=true)"></div>
+
+<div class="cv-content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-20">
+                <h1 class="mb-4 text-center text-white">Liste des CVs</h1>
+                <div class="row justify-content-center mb-3-custom">
+                    <div class="col-lg-6">
+                        <form id="form-ajouter-cv" action="/cv24/add" method="post" enctype="multipart/form-data" class="form-inline">
+                            <div class="custom-file mr-sm-2">
+                                <input type="file" name="file" accept=".xml" class="custom-file-input" id="fileInput" required>
+                                <label class="custom-file-label" for="fileInput">Choisir un fichier</label>
+                            </div>
+                            <button id="ajouterCV" type="submit" class="btn btn-success btn-file d-inline-block">Ajouter CV</button>
+                        </form>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>ID CV</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Objectif</th>
+                        <th>Diplôme le plus élevé</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="cv : ${CV24}">
+                        <td th:text="${cv.id}"></td>
+                        <td th:text="${cv.nom}"></td>
+                        <td th:text="${cv.prenom}"></td>
+                        <td th:text="${cv.status}"></td>
+                        <td th:text="${cv.diplomeNiveau + ' - ' + cv.diplomeInstitut}"></td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info btn-sm" th:onclick="'getCVDetailsXML(' + ${cv.id} + ')'">Détails XML</button>
+                            <a th:href="@{'/cv24/' + ${cv.id}}" class="btn btn-primary btn-sm">Détails</a>
+                            <button type="button" class="btn btn-danger btn-sm" th:onclick="'deleteCvById(' + ${cv.id} + ')'">Supprimer</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+    function deleteCvById(cvId) {
+        console.log('ID du CV à supprimer:', cvId);
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce CV ?")) {
+            fetch(`/cv24/${cvId}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('CV supprimé avec succès !');
+                        window.location.reload();
+                    } else {
+                        alert('Erreur lors de la suppression du CV.');
+                    }
+                })
+                .catch(error => console.error('Erreur:', error));
+        }
+    }
+
+    function getCVDetailsXML(cvId) {
+        fetch(`/cv24/xml/${cvId}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Erreur lors de la récupération des détails du CV en XML.');
+                }
+            })
+            .then(xmlData => {
+                console.log(xmlData);
+                alert('Détails du CV en XML :\n' + xmlData);
+            })
+            .catch(error => console.error('Erreur:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('form-ajouter-cv').addEventListener('submit', function(event) {
+
+        });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            document.querySelector('.custom-file-label').textContent = event.target.files[0] ? event.target.files[0].name : 'Choisir un fichier';
+        });
+    });
+</script>
+</body>
+</html>

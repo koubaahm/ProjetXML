@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Page d'Accueil</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" th:href="@{/images/xml.ico}" type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        .home-container {
+            margin-top: 50px;
+        }
+        .home-jumbotron {
+            background-color: #1e1e1e;
+            padding: 2rem 1rem;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.1);
+        }
+        .home-jumbotron h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .home-jumbotron p {
+            font-size: 1.2rem;
+        }
+        .home-team-section {
+            margin-top: 50px;
+        }
+        .home-team-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .home-team-section ul {
+            padding: 0;
+            list-style: none;
+        }
+        .home-team-section ul li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .home-logo-container {
+            margin-top: 30px;
+        }
+        .home-logo-container img {
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navBar :: navbar(loggedIn=true)"></div>
+
+<div class="container home-container">
+    <div class="home-jumbotron text-center">
+        <h1 th:text="${projectName}">Nom du Projet</h1>
+        <p>Version: <span th:text="${version}">1.0.0</span></p>
+    </div>
+
+    <div class="home-team-section text-center">
+        <h2>Équipe</h2>
+        <ul>
+            <li th:each="member : ${teamMembers}" th:text="${member}">Nom & Prénom</li>
+        </ul>
+    </div>
+
+    <div class="text-center home-logo-container">
+        <img th:src="@{${universityLogo}}" alt="Logo de l'Université de Rouen" class="img-fluid">
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Page d'Aide</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/help.css}">
+    <link rel="icon" th:href="@{/images/xml.ico}" type="image/x-icon">
+</head>
+<body>
+<h1>Informations d'Aide</h1>
+<div class="anchor-links">
+    <a href="#swagger-link" class="swagger-link">
+        <img th:src="@{/images/swagger-logo-2.png}" alt="Swagger Logo" class="swagger-logo-small">
+        Aller à la documentation Swagger
+    </a>
+</div>
+<ul>
+    <li th:each="endpoint : ${endpoints}">
+        <strong>URL:</strong> <span th:text="${endpoint.url}"></span><br>
+        <strong>Méthode:</strong> <span th:text="${endpoint.method}"></span><br>
+        <strong>Résumé:</strong> <span th:text="${endpoint.description}"></span><br><br>
+    </li>
+</ul>
+<div id="swagger-link" class="swagger-link-container">
+    <div class="swagger-doc-container">
+        <img th:src="@{/images/swagger-logo-2.png}" alt="Swagger Logo" class="swagger-logo-large">
+        <h2>Documentation API</h2>
+    </div>
+    <p>Pour plus de détails sur les API, visitez la <a th:href="@{/swagger-ui.html}" class="swagger-link">documentation Swagger</a>.</p>
+</div>
+</body>
+</html>

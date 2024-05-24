@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CV Detail</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/cv24.css}"/>
+    <link rel="icon" th:href="@{/images/xml.ico}" type="image/x-icon">
+    <style>
+        .cv-content {
+            border: 5px solid red;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+
+<div class="cv-content">
+    <div th:utext="${cvHtml}">CV Content</div>
+</div>
+</body>
+</html>
+
+

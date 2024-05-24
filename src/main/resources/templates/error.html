@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Erreur</title>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${errorTitle}">Erreur</h1>
+    <p th:text="${errorMessage}">Une erreur s'est produite</p>
+    <p>Veuillez réessayer plus tard ou contacter l'administrateur du système.</p>
+    <a th:href="@{/acceuil}" class="btn btn-primary">Retour à l'accueil</a>
+</div>
+</body>
+</html>

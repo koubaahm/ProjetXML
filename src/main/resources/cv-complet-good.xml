@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<cv24 xmlns="http://univ.fr/cv24"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://univ.fr/cv24 schema.xsd">
+    <identite>
+        <genre>Mme</genre>
+        <nom>AITHMADOUCH</nom>
+        <prenom>Rania</prenom>
+        <tel>+33 07 65 55 45 00</tel>
+        <mel>rania.aithmadouch@gmail.com</mel>
+    </identite>
+    <objectif statut="stage">
+    </objectif>
+    <prof>
+        <detail>
+            <datedeb>2021-02-01</datedeb>
+            <datefin>2023-03-01</datefin>
+            <titre>Ingénieure en Informatique</titre>
+        </detail>
+        <detail>
+            <datedeb>2019-04-01</datedeb>
+            <datefin>2021-01-31</datefin>
+            <titre>Développeuse Frontend</titre>
+        </detail>
+    </prof>
+    <competences>
+        <diplome niveau="5">
+            <date>2018-07-20</date>
+            <institut>Université de Rouen</institut>
+        </diplome>
+        <diplome niveau="3">
+            <date>2016-06-15</date>
+            <institut>Lycée Jeune Fille</institut>
+        </diplome>
+        <certif>
+            <datedeb>2020-01-01</datedeb>
+            <datefin>2020-06-01</datefin>
+            <titre>Certification Java</titre>
+        </certif>
+        <certif>
+            <datedeb>2022-01-01</datedeb>
+            <titre>Certification Python</titre>
+        </certif>
+    </competences>
+    <divers>
+        <lv lang="Anglais" cert="TOEIC" nivs="C2"/>
+        <lv lang="Espagnol" cert="CLES" niv="900"/>
+        <autre titre="Bénévole" comment="organise des campagnes de distribution alimentaire"/>
+        <autre titre="Loisirs" comment="Passionnée de Music"/>
+    </divers>
+</cv24>
